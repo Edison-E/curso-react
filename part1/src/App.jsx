@@ -1,7 +1,7 @@
 import "./assets/App.css";
 import React from "react";
 import { useState } from "react";
-import Button from "./2/Button";
+import Button from "./pt1/2/Button";
 
 const App = () => {
   const anecdotes = [
@@ -17,7 +17,6 @@ const App = () => {
 
   const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0));
   const [selected, setSelected] = useState(0);
-  //const [anecdoteUp, setAnecdote] = useState(0);
 
   const randomAnecdotes = () => {
     const id = Math.floor(Math.random() * anecdotes.length);
@@ -26,7 +25,7 @@ const App = () => {
   };
 
   const addVoteAnecdotes = () => {
-    const copy = { ...votes };
+    const copy = [...votes ];
     copy[selected] += 1;
     setVotes(copy);
   };
