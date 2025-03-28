@@ -2,54 +2,28 @@ import "./assets/App.css";
 import React from "react";
 import { useState } from "react";
 import Note from "./pt2/components/Note";
+import PersonaAdd from "./pt2/components/PersonaAdd";
+import FilterPersona from "./pt2/components/FilterPersona";
+import PersonaAll from "./pt2/components/PersonaAll";
 
-const App = (props) => {
-  const [notes, setNotes] = useState(props.notes);
-  const [newNote, setNewNote] = useState("");
-  const [showAll, setShowAll] = useState(true);
-
-  const notesToShow = showAll
-    ? notes
-    : notes.filter((note) => note.important === true);
-
-  const addNote = (event) => {
-    event.preventDefault();
-    const noteObject = {
-      content: newNote,
-      important: Math.random() < 0.5,
-      id: notes.length + 1,
-    };
-
-    setNotes(notes.concat(noteObject));
-    setNewNote("");
-  };
-
-  const getNoteChange = (event) => {
-    setNewNote(event.target.value);
-  };
-
-  const changeImportant = () => {
-    setShowAll(!showAll);
-  };
+const App = () => {
+  const [personas, setPersonas] = useState([
+    { name: "Arto Hellas", number: "040-123456", id: 1 },
+    { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
+    { name: "Dan Abramov", number: "12-43-234345", id: 3 },
+    { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
+    { name: "Edison Crespo", number: "39-23-6423122", id: 5 },
+    { name: "Alex Garcia", number: "39-23-6423122", id: 6 },
+    { name: "Maria Love", number: "39-23-6423122", id: 7 },
+    { name: "Daniel Crespo", number: "39-23-6423122", id: 8 },
+  ]);
 
   return (
     <div>
-      <h1>Notes</h1>
-      <div>
-        <button onClick={changeImportant}>
-          show {showAll ? "important" : "all"}
-        </button>
-      </div>
-      <ul>
-        {notesToShow.map((note) => (
-          <Note key={note.id} note={note} />
-        ))}
-      </ul>
-
-      <form onSubmit={addNote}>
-        <input value={newNote} onChange={getNoteChange} />
-        <button type="submit">save</button>
-      </form>
+      <h1>Agencia telefonica</h1>
+      <PersonaAdd personas={personas} setPersonas={setPersonas} />
+      <FilterPersona personas={personas} />
+      <PersonaAll personas={personas} />
     </div>
   );
 };
