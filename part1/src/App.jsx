@@ -1,26 +1,30 @@
 import "./assets/App.css";
 import React from "react";
-import axios from "axios";
 import { useState, useEffect } from "react";
+import PersonsService from "./AgenciaTelefonica/service/PersonsService";
+import Persons from "./AgenciaTelefonica/components/Persons";
+import PersonsAdd from "./AgenciaTelefonica/components/PersonsAdd";
 
 const App = () => {
-  const [personas, setPersonas] = useState([]);
+  const [contactos, setContactos] = useState([]);
 
-  const responseNote = () => {
-    axios.get("http://localhost:3001/persons").then((response) => {
-      setPersonas(response.data);
+  const getPersons = () => {
+    PersonsService.getAll().then((initialPersons) => {
+      setContactos(initialPersons);
     });
   };
-  useEffect(responseNote, []);
+
+  useEffect(getPersons, []);
   return (
     <div>
       <h1>Agencia telefonica</h1>
-      <p>N* Contactos: {personas.length}</p>
-      {personas.map((persona, i) => (
-        <p key={persona.id}>
-          N* {i} : {persona.name} Numero telefono: {persona.number}
-        </p>
-      ))}
+      <Persons contactos={contactos} setContactos={setContactos} PersonsService={PersonsService} />
+      <p>--------------------------------</p>
+      <PersonsAdd
+        PersonsService={PersonsService}
+        contactos={contactos}
+        setContactos={setContactos}
+      />
     </div>
   );
 };
